@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-md-6 mb-3">
+    <div class="col-12 col-md-6 mb-3">
 
         {{ form.veiculo.label(class="form-label") }}
 
@@ -8,7 +8,7 @@
 
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-12 col-md-6 mb-3">
 
         {{ form.motorista.label(class="form-label") }}
 
@@ -20,7 +20,7 @@
 
 <div class="row">
 
-    <div class="col-md-6 mb-3">
+    <div class="col-12 col-md-6 mb-3">
 
         {{ form.destino.label(class="form-label") }}
 
@@ -28,7 +28,7 @@
 
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-12 col-md-6 mb-3">
 
         {{ form.motivo.label(class="form-label") }}
 
@@ -40,7 +40,7 @@
 
 <div class="row">
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
 
         {{ form.data_saida.label(class="form-label") }}
 
@@ -48,7 +48,7 @@
 
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
 
         {{ form.hora_saida.label(class="form-label") }}
 
@@ -56,7 +56,7 @@
 
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
 
         {{ form.data_retorno.label(class="form-label") }}
 
@@ -64,7 +64,7 @@
 
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
 
         {{ form.hora_retorno.label(class="form-label") }}
 
@@ -78,12 +78,15 @@
 
     {{ form.observacoes.label(class="form-label") }}
 
-    {{ form.observacoes(class="form-control", rows=4) }}
+    {{ form.observacoes(
+        class="form-control",
+        rows="4"
+    ) }}
 
 </div>
 
-<div class="text-end">
+<div class="d-grid d-md-flex justify-content-md-end">
 
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-primary btn-responsive") }}
 
 </div>

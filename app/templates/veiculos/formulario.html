@@ -1,61 +1,91 @@
 <div class="row">
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.placa.label(class="form-label") }}
+
         {{ form.placa(class="form-control") }}
+
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.marca.label(class="form-label") }}
+
         {{ form.marca(class="form-control") }}
+
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.modelo.label(class="form-label") }}
+
         {{ form.modelo(class="form-control") }}
+
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.ano.label(class="form-label") }}
+
         {{ form.ano(class="form-control") }}
+
     </div>
 
 </div>
 
 <div class="row">
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.cor.label(class="form-label") }}
+
         {{ form.cor(class="form-control") }}
+
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.unidade.label(class="form-label") }}
+
         {{ form.unidade(class="form-control") }}
+
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.km_atual.label(class="form-label") }}
+
         {{ form.km_atual(class="form-control") }}
+
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3">
+
         {{ form.status.label(class="form-label") }}
+
         {{ form.status(class="form-select") }}
+
     </div>
 
 </div>
 
 <div class="row">
 
-    <div class="col-md-6 mb-3">
+    <div class="col-12 col-md-6 mb-3">
+
         {{ form.ultima_revisao.label(class="form-label") }}
+
         {{ form.ultima_revisao(class="form-control") }}
+
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-12 col-md-6 mb-3">
+
         {{ form.proxima_revisao.label(class="form-label") }}
+
         {{ form.proxima_revisao(class="form-control") }}
+
     </div>
 
 </div>
@@ -71,8 +101,8 @@
 
 </div>
 
-<div class="text-end">
+<div class="d-grid d-md-flex justify-content-md-end">
 
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-primary btn-responsive") }}
 
 </div>
