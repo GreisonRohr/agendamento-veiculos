@@ -6,19 +6,29 @@ Agendamentos
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
 
-    <h2>
+    <div>
 
-        <i class="bi bi-calendar-check"></i>
+        <h2 class="mb-1">
 
-        Agendamentos
+            <i class="bi bi-calendar-check"></i>
 
-    </h2>
+            Agendamentos
+
+        </h2>
+
+        <small class="text-muted">
+
+            Gerencie os agendamentos da frota
+
+        </small>
+
+    </div>
 
     <a
         href="{{ url_for('agendamentos.novo') }}"
-        class="btn btn-primary">
+        class="btn btn-primary btn-responsive">
 
         <i class="bi bi-plus-circle"></i>
 
@@ -32,170 +42,200 @@ Agendamentos
 
     <div class="card-body">
 
-        <table class="table table-hover align-middle">
+        <div class="table-responsive">
 
-            <thead>
+            <table class="table table-hover align-middle">
 
-                <tr>
+                <thead class="table-light">
 
-                    <th>Veículo</th>
+                    <tr>
 
-                    <th>Motorista</th>
+                        <th>Veículo</th>
 
-                    <th>Destino</th>
+                        <th>Motorista</th>
 
-                    <th>Saída</th>
+                        <th class="d-none d-lg-table-cell">
+                            Destino
+                        </th>
 
-                    <th>Retorno</th>
+                        <th class="d-none d-md-table-cell">
+                            Saída
+                        </th>
 
-                    <th>Status</th>
+                        <th class="d-none d-md-table-cell">
+                            Retorno
+                        </th>
 
-                    <th width="140">Ações</th>
+                        <th>Status</th>
 
-                </tr>
+                        <th class="text-center">
+                            Ações
+                        </th>
 
-            </thead>
+                    </tr>
 
-            <tbody>
+                </thead>
 
-            {% for a in agendamentos %}
+                <tbody>
 
-                <tr>
+                {% for a in agendamentos %}
 
-                    <td>
+                    <tr>
 
-                        <strong>{{ a.veiculo.placa }}</strong>
+                        <td>
 
-                        <br>
+                            <strong>
 
-                        <small class="text-muted">
+                                {{ a.veiculo.placa }}
 
-                            {{ a.veiculo.modelo }}
+                            </strong>
 
-                        </small>
+                            <br>
 
-                    </td>
+                            <small class="text-muted">
 
-                    <td>{{ a.motorista }}</td>
+                                {{ a.veiculo.modelo }}
 
-                    <td>{{ a.destino }}</td>
+                            </small>
 
-                    <td>
+                        </td>
 
-                        {{ a.data_saida.strftime("%d/%m/%Y") }}
+                        <td>
 
-                        <br>
+                            {{ a.motorista }}
 
-                        <small>
+                        </td>
 
-                            {{ a.hora_saida.strftime("%H:%M") }}
+                        <td class="d-none d-lg-table-cell">
 
-                        </small>
+                            {{ a.destino }}
 
-                    </td>
+                        </td>
 
-                    <td>
+                        <td class="d-none d-md-table-cell">
 
-                        {{ a.data_retorno.strftime("%d/%m/%Y") }}
+                            {{ a.data_saida.strftime("%d/%m/%Y") }}
 
-                        <br>
+                            <br>
 
-                        <small>
+                            <small>
 
-                            {{ a.hora_retorno.strftime("%H:%M") }}
+                                {{ a.hora_saida.strftime("%H:%M") }}
 
-                        </small>
+                            </small>
 
-                    </td>
+                        </td>
 
-                    <td>
+                        <td class="d-none d-md-table-cell">
 
-                        {% if a.status == "Agendado" %}
+                            {{ a.data_retorno.strftime("%d/%m/%Y") }}
 
-                            <span class="badge bg-success">
+                            <br>
 
-                                Agendado
+                            <small>
 
-                            </span>
+                                {{ a.hora_retorno.strftime("%H:%M") }}
 
-                        {% elif a.status == "Em andamento" %}
+                            </small>
 
-                            <span class="badge bg-primary">
+                        </td>
 
-                                Em andamento
+                        <td>
 
-                            </span>
+                            {% if a.status == "Agendado" %}
 
-                        {% elif a.status == "Finalizado" %}
+                                <span class="badge bg-success">
 
-                            <span class="badge bg-secondary">
+                                    Agendado
 
-                                Finalizado
+                                </span>
 
-                            </span>
+                            {% elif a.status == "Em andamento" %}
 
-                        {% elif a.status == "Cancelado" %}
+                                <span class="badge bg-primary">
 
-                            <span class="badge bg-danger">
+                                    Em andamento
 
-                                Cancelado
+                                </span>
 
-                            </span>
+                            {% elif a.status == "Finalizado" %}
 
-                        {% else %}
+                                <span class="badge bg-secondary">
 
-                            <span class="badge bg-warning text-dark">
+                                    Finalizado
 
-                                {{ a.status }}
+                                </span>
 
-                            </span>
+                            {% elif a.status == "Cancelado" %}
 
-                        {% endif %}
+                                <span class="badge bg-danger">
 
-                    </td>
+                                    Cancelado
 
-                    <td>
+                                </span>
 
-                        <a
-                            href="{{ url_for('agendamentos.editar', id=a.id) }}"
-                            class="btn btn-warning btn-sm"
-                            title="Editar">
+                            {% else %}
 
-                            <i class="bi bi-pencil-fill"></i>
+                                <span class="badge bg-warning text-dark">
 
-                        </a>
+                                    {{ a.status }}
 
-                        <a
-                            href="{{ url_for('agendamentos.excluir', id=a.id) }}"
-                            class="btn btn-danger btn-sm"
-                            title="Cancelar"
-                            onclick="return confirm('Deseja cancelar este agendamento?')">
+                                </span>
 
-                            <i class="bi bi-trash-fill"></i>
+                            {% endif %}
 
-                        </a>
+                        </td>
 
-                    </td>
+                        <td class="text-center text-nowrap">
 
-                </tr>
+                            <a
+                                href="{{ url_for('agendamentos.editar', id=a.id) }}"
+                                class="btn btn-warning btn-sm"
+                                title="Editar">
 
-            {% else %}
+                                <i class="bi bi-pencil-fill"></i>
 
-                <tr>
+                            </a>
 
-                    <td colspan="7" class="text-center text-muted">
+                            <a
+                                href="{{ url_for('agendamentos.excluir', id=a.id) }}"
+                                class="btn btn-danger btn-sm"
+                                title="Cancelar"
+                                onclick="return confirm('Deseja cancelar este agendamento?')">
 
-                        Nenhum agendamento encontrado.
+                                <i class="bi bi-trash-fill"></i>
 
-                    </td>
+                            </a>
 
-                </tr>
+                        </td>
 
-            {% endfor %}
+                    </tr>
 
-            </tbody>
+                {% else %}
 
-        </table>
+                    <tr>
+
+                        <td colspan="7" class="text-center py-5">
+
+                            <i class="bi bi-calendar-x display-4 text-secondary"></i>
+
+                            <p class="mt-3 mb-0">
+
+                                Nenhum agendamento encontrado.
+
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
