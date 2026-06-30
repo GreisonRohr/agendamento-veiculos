@@ -1,16 +1,87 @@
-<nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand bg-white">
 
     <div class="container-fluid">
 
-        <h4 class="m-0">
+        <div class="d-flex align-items-center">
 
-            Sistema de Agendamento de Veículos
+            <button
+                class="btn btn-light me-3 d-lg-none"
+                id="menu-toggle">
 
-        </h4>
+                <i class="bi bi-list fs-4"></i>
 
-        <div>
+            </button>
 
-            <i class="bi bi-person-circle fs-2"></i>
+            <h4 class="m-0 fw-semibold">
+
+                Sistema de Agendamento de Veículos
+
+            </h4>
+
+        </div>
+
+        <div class="d-flex align-items-center">
+
+            <button
+                class="btn btn-light position-relative me-3">
+
+                <i class="bi bi-bell fs-5"></i>
+
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                    0
+
+                </span>
+
+            </button>
+
+            <div class="dropdown">
+
+                <button
+                    class="btn btn-light dropdown-toggle"
+                    data-bs-toggle="dropdown">
+
+                    <i class="bi bi-person-circle fs-4"></i>
+
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+
+                        <a class="dropdown-item" href="#">
+
+                            Meu Perfil
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a class="dropdown-item" href="#">
+
+                            Configurações
+
+                        </a>
+
+                    </li>
+
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li>
+
+                        <a class="dropdown-item text-danger" href="#">
+
+                            Sair
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
 
         </div>
 

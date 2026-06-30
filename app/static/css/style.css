@@ -1,74 +1,82 @@
+/* ===========================
+   GERAL
+=========================== */
+
 body{
-
-    background:#f5f7fb;
-
     margin:0;
-
-    font-family:Segoe UI, sans-serif;
-
+    font-family:"Segoe UI",sans-serif;
+    background:#f4f6f9;
 }
 
-.wrapper{
+a{
+    text-decoration:none;
+}
 
+.app{
     display:flex;
-
     min-height:100vh;
-
 }
+
+/* ===========================
+   SIDEBAR
+=========================== */
 
 .sidebar{
 
     width:260px;
-
     background:#1f2937;
-
-    color:white;
+    color:#fff;
 
     position:fixed;
 
+    left:0;
     top:0;
-
     bottom:0;
 
-    left:0;
+    overflow-y:auto;
+
+    transition:.3s;
+    z-index:1050;
+
+    box-shadow:4px 0 10px rgba(0,0,0,.08);
 
 }
 
-.logo{
+.sidebar h3{
 
-    padding:25px;
+    padding:25px 20px;
+
+    margin:0;
 
     text-align:center;
 
-    border-bottom:1px solid rgba(255,255,255,.1);
+    font-size:1.35rem;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
 
 }
 
-.sidebar ul{
+.sidebar hr{
 
-    list-style:none;
-
-    padding:0;
-
-    margin-top:20px;
-
-}
-
-.sidebar li{
-
-    margin:5px 0;
+    display:none;
 
 }
 
 .sidebar a{
 
-    display:block;
+    display:flex;
 
-    color:white;
+    align-items:center;
 
-    text-decoration:none;
+    gap:12px;
 
-    padding:15px 25px;
+    color:#d1d5db;
+
+    padding:14px 24px;
+
+    transition:.2s;
+
+    font-size:.95rem;
 
 }
 
@@ -76,47 +84,131 @@ body{
 
     background:#374151;
 
+    color:#fff;
+
+    padding-left:30px;
+
 }
 
-.main{
+.sidebar i{
+
+    font-size:1.1rem;
+
+}
+
+/* ===========================
+   CONTEÚDO
+=========================== */
+
+.content{
 
     margin-left:260px;
 
     width:100%;
 
+    min-height:100vh;
+
 }
+
+/* ===========================
+   NAVBAR
+=========================== */
 
 .navbar{
 
+    background:#fff;
+
     height:70px;
+
+    padding:0 25px;
+
+    border-bottom:1px solid #e5e7eb;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
 
 }
 
-.content{
+/* ===========================
+   CONTAINER
+=========================== */
+
+.container-fluid{
 
     padding:30px;
 
 }
 
-.dashboard-card{
+/* ===========================
+   CARDS
+=========================== */
+
+.card{
 
     border:none;
 
-    border-radius:15px;
+    border-radius:18px;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    box-shadow:0 8px 18px rgba(0,0,0,.06);
 
 }
+
+.card-header{
+
+    background:#fff;
+
+    border-bottom:1px solid #ececec;
+
+    font-weight:600;
+
+}
+
+/* ===========================
+   BOTÕES
+=========================== */
+
+.btn{
+
+    border-radius:10px;
+
+    padding:8px 18px;
+
+}
+
+/* ===========================
+   TABELAS
+=========================== */
+
+.table{
+
+    margin-bottom:0;
+
+}
+
+.table thead{
+
+    background:#f8fafc;
+
+}
+
+.table-responsive{
+
+    border-radius:15px;
+
+}
+
+/* ===========================
+   CALENDÁRIO
+=========================== */
 
 #calendar{
 
-    min-height:750px;
+    min-height:700px;
 
 }
 
-.fc-event{
+.fc{
 
-    cursor:pointer;
+    font-size:.95rem;
 
 }
 
@@ -124,10 +216,171 @@ body{
 
     font-size:1.3rem;
 
+    font-weight:600;
+
 }
 
-.fc-daygrid-event{
+.fc-event{
 
-    border-radius:6px;
+    cursor:pointer;
+
+    border-radius:8px;
+
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media(max-width:991px){
+
+.sidebar{
+
+    transform:translateX(-100%);
+
+}
+
+.sidebar.show{
+
+    transform:translateX(0);
+
+}
+
+.content{
+
+    margin-left:0;
+
+}
+
+.container-fluid{
+
+    padding:20px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.card{
+
+    margin-bottom:15px;
+
+}
+
+.container-fluid{
+
+    padding:15px;
+
+}
+
+.navbar{
+
+    padding:0 15px;
+
+}
+
+.fc-toolbar{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.fc-header-toolbar{
+
+    gap:10px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.sidebar{
+
+    width:250px;
+
+}
+
+.fc{
+
+    font-size:.8rem;
+
+}
+
+.btn{
+
+    width:100%;
+
+}
+
+}
+
+
+/* Overlay para celular */
+
+.sidebar-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.4);
+
+    display:none;
+
+    z-index:1040;
+
+}
+
+.sidebar.show + .sidebar-overlay{
+
+    display:block;
+
+}
+
+/* Desktop */
+
+@media(min-width:992px){
+
+    #menu-toggle{
+
+        display:none;
+
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:991px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+    }
+
+    .sidebar.show{
+
+        transform:translateX(0);
+
+    }
+
+    .content{
+
+        margin-left:0;
+
+    }
+
+    .navbar h4{
+
+        font-size:1rem;
+
+    }
 
 }

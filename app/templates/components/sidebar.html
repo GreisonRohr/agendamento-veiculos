@@ -1,8 +1,8 @@
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
 
-    <div class="text-center mb-4">
+    <div class="logo">
 
-        <h3>
+        <h3 class="mb-1">
 
             <i class="bi bi-car-front-fill"></i>
 
@@ -10,78 +10,84 @@
 
         </h3>
 
-        <small class="text-light opacity-75">
+        <small>
+
             Sistema de Agendamento
+
         </small>
 
     </div>
 
-    <hr>
+    <nav class="mt-4">
 
-    <a href="{{ url_for('dashboard.index') }}">
+        <a href="{{ url_for('dashboard.index') }}">
 
-        <i class="bi bi-speedometer2"></i>
+            <i class="bi bi-speedometer2"></i>
 
-        Dashboard
+            <span>Dashboard</span>
 
-    </a>
+        </a>
 
-    <a href="{{ url_for('agenda.index') }}">
+        <a href="{{ url_for('agenda.index') }}">
 
-        <i class="bi bi-calendar-week"></i>
+            <i class="bi bi-calendar-week"></i>
 
-        Agenda da Frota
+            <span>Agenda da Frota</span>
 
-    </a>
+        </a>
 
-    <a href="{{ url_for('calendario.index') }}">
+        <a href="{{ url_for('calendario.index') }}">
 
-        <i class="bi bi-calendar3"></i>
+            <i class="bi bi-calendar3"></i>
 
-        Calendário
+            <span>Calendário</span>
 
-    </a>
+        </a>
 
-    <a href="{{ url_for('veiculos.index') }}">
+        <a href="{{ url_for('veiculos.index') }}">
 
-        <i class="bi bi-car-front"></i>
+            <i class="bi bi-car-front"></i>
 
-        Veículos
+            <span>Veículos</span>
 
-    </a>
+        </a>
 
-    <a href="{{ url_for('agendamentos.index') }}">
+        <a href="{{ url_for('agendamentos.index') }}">
 
-        <i class="bi bi-calendar-check"></i>
+            <i class="bi bi-calendar-check"></i>
 
-        Agendamentos
+            <span>Agendamentos</span>
 
-    </a>
+        </a>
 
-    <a href="{{ url_for('manutencoes.index') }}">
+        <a href="{{ url_for('manutencoes.index') }}">
 
-        <i class="bi bi-tools"></i>
+            <i class="bi bi-tools"></i>
 
-        Manutenções
+            <span>Manutenções</span>
 
-    </a>
+        </a>
 
-    <a href="#">
+        <a href="#">
 
-        <i class="bi bi-file-earmark-bar-graph"></i>
+            <i class="bi bi-file-earmark-bar-graph"></i>
 
-        Relatórios
+            <span>Relatórios</span>
 
-    </a>
+        </a>
 
-    <hr>
+    </nav>
 
-    <a href="#">
+    <div class="sidebar-footer">
 
-        <i class="bi bi-gear"></i>
+        <a href="#">
 
-        Configurações
+            <i class="bi bi-gear"></i>
 
-    </a>
+            <span>Configurações</span>
+
+        </a>
+
+    </div>
 
 </div>
