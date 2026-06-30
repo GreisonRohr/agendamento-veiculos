@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}
+Veículos
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="mb-0">
+            <i class="bi bi-car-front-fill"></i>
+            Veículos
+        </h2>
+
+        <small class="text-muted">
+            Gerencie os veículos da empresa
+        </small>
+    </div>
+
+    <a href="{{ url_for('veiculos.novo') }}"
+       class="btn btn-primary">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Novo Veículo
+
+    </a>
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Unidade</th>
+                    <th>KM</th>
+                    <th>Status</th>
+                    <th class="text-center">Ações</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for veiculo in veiculos %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ veiculo.placa }}</strong>
+                    </td>
+
+                    <td>{{ veiculo.marca }}</td>
+
+                    <td>{{ veiculo.modelo }}</td>
+
+                    <td>{{ veiculo.unidade }}</td>
+
+                    <td>{{ "{:,.0f}".format(veiculo.km_atual or 0).replace(",", ".") }}</td>
+
+                    <td>
+
+                        <span class="badge bg-{{ veiculo.badge_status }}">
+                            {{ veiculo.status }}
+                        </span>
+
+                    </td>
+
+                    <td class="text-center">
+
+                        <a href="{{ url_for('veiculos.editar', id=veiculo.id) }}"
+                           class="btn btn-warning btn-sm">
+
+                            <i class="bi bi-pencil"></i>
+
+                        </a>
+
+                        <a href="{{ url_for('veiculos.excluir', id=veiculo.id) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Deseja realmente excluir este veículo?')">
+
+                            <i class="bi bi-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="7" class="text-center py-4">
+
+                        <i class="bi bi-car-front display-5 text-secondary"></i>
+
+                        <p class="mt-3 mb-0">
+
+                            Nenhum veículo cadastrado.
+
+                        </p>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

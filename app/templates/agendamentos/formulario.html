@@ -1,0 +1,89 @@
+<div class="row">
+
+    <div class="col-md-6 mb-3">
+
+        {{ form.veiculo.label(class="form-label") }}
+
+        {{ form.veiculo(class="form-select") }}
+
+    </div>
+
+    <div class="col-md-6 mb-3">
+
+        {{ form.motorista.label(class="form-label") }}
+
+        {{ form.motorista(class="form-control") }}
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6 mb-3">
+
+        {{ form.destino.label(class="form-label") }}
+
+        {{ form.destino(class="form-control") }}
+
+    </div>
+
+    <div class="col-md-6 mb-3">
+
+        {{ form.motivo.label(class="form-label") }}
+
+        {{ form.motivo(class="form-control") }}
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-3 mb-3">
+
+        {{ form.data_saida.label(class="form-label") }}
+
+        {{ form.data_saida(class="form-control") }}
+
+    </div>
+
+    <div class="col-md-3 mb-3">
+
+        {{ form.hora_saida.label(class="form-label") }}
+
+        {{ form.hora_saida(class="form-control") }}
+
+    </div>
+
+    <div class="col-md-3 mb-3">
+
+        {{ form.data_retorno.label(class="form-label") }}
+
+        {{ form.data_retorno(class="form-control") }}
+
+    </div>
+
+    <div class="col-md-3 mb-3">
+
+        {{ form.hora_retorno.label(class="form-label") }}
+
+        {{ form.hora_retorno(class="form-control") }}
+
+    </div>
+
+</div>
+
+<div class="mb-3">
+
+    {{ form.observacoes.label(class="form-label") }}
+
+    {{ form.observacoes(class="form-control", rows=4) }}
+
+</div>
+
+<div class="text-end">
+
+    {{ form.submit(class="btn btn-primary") }}
+
+</div>

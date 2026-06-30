@@ -1,0 +1,133 @@
+body{
+
+    background:#f5f7fb;
+
+    margin:0;
+
+    font-family:Segoe UI, sans-serif;
+
+}
+
+.wrapper{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+.sidebar{
+
+    width:260px;
+
+    background:#1f2937;
+
+    color:white;
+
+    position:fixed;
+
+    top:0;
+
+    bottom:0;
+
+    left:0;
+
+}
+
+.logo{
+
+    padding:25px;
+
+    text-align:center;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin-top:20px;
+
+}
+
+.sidebar li{
+
+    margin:5px 0;
+
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:15px 25px;
+
+}
+
+.sidebar a:hover{
+
+    background:#374151;
+
+}
+
+.main{
+
+    margin-left:260px;
+
+    width:100%;
+
+}
+
+.navbar{
+
+    height:70px;
+
+}
+
+.content{
+
+    padding:30px;
+
+}
+
+.dashboard-card{
+
+    border:none;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+#calendar{
+
+    min-height:750px;
+
+}
+
+.fc-event{
+
+    cursor:pointer;
+
+}
+
+.fc-toolbar-title{
+
+    font-size:1.3rem;
+
+}
+
+.fc-daygrid-event{
+
+    border-radius:6px;
+
+}

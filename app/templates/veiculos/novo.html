@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}
+Novo Veículo
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header">
+
+        <h4>Novo Veículo</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {{ form.hidden_tag() }}
+
+            {% include "veiculos/formulario.html" %}
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% if mostrar_modal %}
+
+<div class="modal fade"
+     id="modalReativar"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-warning">
+
+                <h5 class="modal-title">
+
+                    Veículo encontrado
+
+                </h5>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+
+                    Já existe um veículo inativo com a placa
+
+                    <strong>{{ veiculo_inativo.placa }}</strong>
+
+                </p>
+
+                <p>
+
+                    Deseja reativá-lo?
+
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Cancelar
+
+                </button>
+
+                <form
+                    method="POST"
+                    action="{{ url_for('veiculos.reativar', id=veiculo_inativo.id) }}">
+
+                    {{ form.hidden_tag() }}
+
+                    {% for campo in form if campo.name not in ['csrf_token','submit'] %}
+
+                        <input
+                            type="hidden"
+                            name="{{ campo.name }}"
+                            value="{{ campo.data if campo.data is not none else '' }}">
+
+                    {% endfor %}
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        Reativar Veículo
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const modal = new bootstrap.Modal(
+        document.getElementById("modalReativar")
+    );
+
+    modal.show();
+
+});
+
+</script>
+
+{% endif %}
+
+{% endblock %}

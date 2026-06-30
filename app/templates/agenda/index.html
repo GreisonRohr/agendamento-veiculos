@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agenda da Frota
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            <i class="bi bi-calendar-week"></i>
+            Agenda da Frota
+        </h2>
+
+        <small class="text-muted">
+            Visão operacional dos veículos
+        </small>
+
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <!-- Próximas Saídas -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0 h-100">
+
+            <div class="card-header bg-primary text-white">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Próximas Saídas
+
+            </div>
+
+            <div class="card-body">
+
+                {% for agendamento in proximas_saidas %}
+
+                <div class="border-bottom pb-3 mb-3">
+
+                    <h5>
+
+                        {{ agendamento.hora_saida.strftime("%H:%M") }}
+
+                    </h5>
+
+                    <strong>
+
+                        🚗 {{ agendamento.veiculo.modelo }}
+
+                    </strong>
+
+                    <br>
+
+                    <small>
+
+                        {{ agendamento.veiculo.placa }}
+
+                    </small>
+
+                    <br>
+
+                    👤 {{ agendamento.motorista }}
+
+                    <br>
+
+                    📍 {{ agendamento.destino }}
+
+                </div>
+
+                {% else %}
+
+                <p class="text-muted">
+
+                    Nenhuma saída programada.
+
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Veículos Livres -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0 h-100">
+
+            <div class="card-header bg-success text-white">
+
+                <i class="bi bi-car-front-fill"></i>
+
+                Veículos Livres
+
+            </div>
+
+            <div class="card-body">
+
+                {% for veiculo in livres %}
+
+                <div class="d-flex justify-content-between border-bottom py-2">
+
+                    <div>
+
+                        <strong>
+
+                            {{ veiculo.modelo }}
+
+                        </strong>
+
+                        <br>
+
+                        <small>
+
+                            {{ veiculo.placa }}
+
+                        </small>
+
+                    </div>
+
+                    <span class="badge bg-success">
+
+                        Disponível
+
+                    </span>
+
+                </div>
+
+                {% else %}
+
+                <p class="text-muted">
+
+                    Nenhum veículo disponível.
+
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4 mt-2">
+
+    <!-- Retornos -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-warning">
+
+                <i class="bi bi-arrow-return-left"></i>
+
+                Retornos de Hoje
+
+            </div>
+
+            <div class="card-body">
+
+                {% for retorno in retornos %}
+
+                <div class="border-bottom py-2">
+
+                    <strong>
+
+                        {{ retorno.hora_retorno.strftime("%H:%M") }}
+
+                    </strong>
+
+                    -
+
+                    {{ retorno.veiculo.modelo }}
+
+                    <br>
+
+                    <small>
+
+                        {{ retorno.motorista }}
+
+                    </small>
+
+                </div>
+
+                {% else %}
+
+                <p class="text-muted">
+
+                    Nenhum retorno previsto.
+
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Manutenção -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-danger text-white">
+
+                <i class="bi bi-tools"></i>
+
+                Em Manutenção
+
+            </div>
+
+            <div class="card-body">
+
+                {% for veiculo in manutencoes %}
+
+                <div class="border-bottom py-2">
+
+                    <strong>
+
+                        {{ veiculo.modelo }}
+
+                    </strong>
+
+                    <br>
+
+                    <small>
+
+                        {{ veiculo.placa }}
+
+                    </small>
+
+                </div>
+
+                {% else %}
+
+                <p class="text-muted">
+
+                    Nenhum veículo em manutenção.
+
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

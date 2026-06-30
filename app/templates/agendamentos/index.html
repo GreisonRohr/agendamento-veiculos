@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agendamentos
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>
+
+        <i class="bi bi-calendar-check"></i>
+
+        Agendamentos
+
+    </h2>
+
+    <a
+        href="{{ url_for('agendamentos.novo') }}"
+        class="btn btn-primary">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Novo Agendamento
+
+    </a>
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Veículo</th>
+
+                    <th>Motorista</th>
+
+                    <th>Destino</th>
+
+                    <th>Saída</th>
+
+                    <th>Retorno</th>
+
+                    <th>Status</th>
+
+                    <th width="140">Ações</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for a in agendamentos %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>{{ a.veiculo.placa }}</strong>
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            {{ a.veiculo.modelo }}
+
+                        </small>
+
+                    </td>
+
+                    <td>{{ a.motorista }}</td>
+
+                    <td>{{ a.destino }}</td>
+
+                    <td>
+
+                        {{ a.data_saida.strftime("%d/%m/%Y") }}
+
+                        <br>
+
+                        <small>
+
+                            {{ a.hora_saida.strftime("%H:%M") }}
+
+                        </small>
+
+                    </td>
+
+                    <td>
+
+                        {{ a.data_retorno.strftime("%d/%m/%Y") }}
+
+                        <br>
+
+                        <small>
+
+                            {{ a.hora_retorno.strftime("%H:%M") }}
+
+                        </small>
+
+                    </td>
+
+                    <td>
+
+                        {% if a.status == "Agendado" %}
+
+                            <span class="badge bg-success">
+
+                                Agendado
+
+                            </span>
+
+                        {% elif a.status == "Em andamento" %}
+
+                            <span class="badge bg-primary">
+
+                                Em andamento
+
+                            </span>
+
+                        {% elif a.status == "Finalizado" %}
+
+                            <span class="badge bg-secondary">
+
+                                Finalizado
+
+                            </span>
+
+                        {% elif a.status == "Cancelado" %}
+
+                            <span class="badge bg-danger">
+
+                                Cancelado
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+
+                                {{ a.status }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{{ url_for('agendamentos.editar', id=a.id) }}"
+                            class="btn btn-warning btn-sm"
+                            title="Editar">
+
+                            <i class="bi bi-pencil-fill"></i>
+
+                        </a>
+
+                        <a
+                            href="{{ url_for('agendamentos.excluir', id=a.id) }}"
+                            class="btn btn-danger btn-sm"
+                            title="Cancelar"
+                            onclick="return confirm('Deseja cancelar este agendamento?')">
+
+                            <i class="bi bi-trash-fill"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="7" class="text-center text-muted">
+
+                        Nenhum agendamento encontrado.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

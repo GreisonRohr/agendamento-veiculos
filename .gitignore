@@ -1,0 +1,42 @@
+# Ambiente virtual
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Banco de dados SQLite
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Arquivos do Flask
+.flaskenv
+
+# IDEs
+.vscode/
+.idea/
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Alembic
+migrations/__pycache__/
+
+# Pytest
+.pytest_cache/
+
+# Build
+dist/
+build/

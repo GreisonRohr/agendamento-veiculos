@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+Reativar Veículo
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-warning">
+
+        <h4>Veículo encontrado</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <p>
+
+            Já existe um veículo inativo com a placa:
+
+            <strong>{{ veiculo.placa }}</strong>
+
+        </p>
+
+        <p>
+
+            Deseja reativá-lo?
+
+        </p>
+
+        <form
+            method="POST"
+            action="{{ url_for('veiculos.reativar', id=veiculo.id) }}">
+
+            {{ form.hidden_tag() }}
+
+            <button
+                class="btn btn-success">
+
+                Reativar veículo
+
+            </button>
+
+            <a
+                href="{{ url_for('veiculos.index') }}"
+                class="btn btn-secondary">
+
+                Cancelar
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

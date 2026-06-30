@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}
+Calendário
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+    <i class="bi bi-calendar3"></i>
+
+    Calendário da Frota
+
+</h2>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <div id="calendar"></div>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="eventoModal" tabindex="-1">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Detalhes do Agendamento
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <strong>Veículo</strong>
+
+                        <p id="modalVeiculo"></p>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Placa</strong>
+
+                        <p id="modalPlaca"></p>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <strong>Motorista</strong>
+
+                        <p id="modalMotorista"></p>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Destino</strong>
+
+                        <p id="modalDestino"></p>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <strong>Início</strong>
+
+                        <p id="modalInicio"></p>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Fim</strong>
+
+                        <p id="modalFim"></p>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <strong>Status</strong>
+
+                        <p id="modalStatus"></p>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <strong>Observações</strong>
+
+                <p id="modalObservacoes"></p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Fechar
+
+                </button>
+
+                <a
+                    id="btnEditar"
+                    class="btn btn-primary">
+
+                    Editar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link
+href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.18/index.global.min.css"
+rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.18/index.global.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/calendario.js') }}"></script>
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar Veículo
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header">
+
+        <h4 class="mb-0">
+
+            Editar Veículo
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {{ form.hidden_tag() }}
+
+            {% include "veiculos/formulario.html" %}
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
