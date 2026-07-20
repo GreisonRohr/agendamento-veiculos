@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 
 from app.services.agenda_service import AgendaService
+from app.services.auth_service import login_required
 
 agenda_bp = Blueprint(
     "agenda",
@@ -10,6 +11,7 @@ agenda_bp = Blueprint(
 
 
 @agenda_bp.route("/")
+@login_required
 def index():
 
     return render_template(

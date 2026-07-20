@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Histórico
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2><i class="bi bi-clock-history"></i> Histórico</h2>
+        <small class="text-muted">Consulte agendamentos por período, veículo ou motorista</small>
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="row g-3">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {{ form.data_inicio.label(class="form-label") }}
+                    {{ form.data_inicio(class="form-control") }}
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {{ form.data_fim.label(class="form-label") }}
+                    {{ form.data_fim(class="form-control") }}
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {{ form.veiculo.label(class="form-label") }}
+                    {{ form.veiculo(class="form-select") }}
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {{ form.status.label(class="form-label") }}
+                    {{ form.status(class="form-select") }}
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1">
+                <div class="col-12 col-md-6">
+                    {{ form.motorista.label(class="form-label") }}
+                    {{ form.motorista(class="form-control", placeholder="Nome do motorista") }}
+                </div>
+                <div class="col-12 col-md-6 d-flex align-items-end">
+                    {{ form.submit(class="btn btn-primary w-100") }}
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Resultados -->
+{% if resultados %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0"><i class="bi bi-search"></i> Resultados ({{ resultados|length }})</h5>
+    <form method="POST" action="{{ url_for('historico.exportar') }}">
+        {{ form.hidden_tag() }}
+        <button type="submit" class="btn btn-success btn-sm">
+            <i class="bi bi-file-earmark-excel"></i> Exportar CSV
+        </button>
+    </form>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data</th>
+                        <th>Veículo</th>
+                        <th>Motorista</th>
+                        <th>Destino</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for a in resultados %}
+                    <tr>
+                        <td>
+                            {{ a.data_saida.strftime("%d/%m/%Y") }}
+                            <br><small>{{ a.hora_saida.strftime("%H:%M") }}</small>
+                        </td>
+                        <td>
+                            <strong>{{ a.veiculo.placa }}</strong>
+                            <br><small class="text-muted">{{ a.veiculo.modelo }}</small>
+                        </td>
+                        <td>{{ a.motorista }}</td>
+                        <td>{{ a.destino }}</td>
+                        <td>
+                            {% if a.status == "Agendado" %}
+                                <span class="badge bg-success">Agendado</span>
+                            {% elif a.status == "Em andamento" %}
+                                <span class="badge bg-primary">Em andamento</span>
+                            {% elif a.status == "Finalizado" %}
+                                <span class="badge bg-secondary">Finalizado</span>
+                            {% elif a.status == "Cancelado" %}
+                                <span class="badge bg-danger">Cancelado</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center table-acoes">
+                            <a href="{{ url_for('agendamentos.editar', id=a.id) }}" class="btn btn-warning btn-sm" title="Editar">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% elif request.method == 'POST' %}
+
+<div class="text-center py-5">
+    <i class="bi bi-inbox display-4 text-secondary"></i>
+    <p class="text-muted mt-3">Nenhum agendamento encontrado com os filtros aplicados.</p>
+</div>
+
+{% endif %}
+
+{% endblock %}

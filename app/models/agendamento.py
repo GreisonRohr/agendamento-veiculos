@@ -14,6 +14,11 @@ class Agendamento(db.Model):
         nullable=False
     )
 
+    usuario_id = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
     motorista = db.Column(
         db.String(100),
         nullable=False

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar Usuário
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+    <div class="card-header">
+        <h4><i class="bi bi-pencil-square"></i> Editar Usuário</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {% include "usuarios/formulario.html" %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

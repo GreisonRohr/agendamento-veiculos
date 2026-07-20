@@ -10,7 +10,13 @@ Novo Veículo
 
     <div class="card-header">
 
-        <h4>Novo Veículo</h4>
+        <h4>
+
+            <i class="bi bi-plus-circle"></i>
+
+            Novo Veículo
+
+        </h4>
 
     </div>
 
@@ -20,7 +26,119 @@ Novo Veículo
 
             {{ form.hidden_tag() }}
 
-            {% include "veiculos/formulario.html" %}
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.placa.label(class="form-label") }}
+
+                    {{ form.placa(class="form-control", placeholder="ABC-1234") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.marca.label(class="form-label") }}
+
+                    {{ form.marca(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.modelo.label(class="form-label") }}
+
+                    {{ form.modelo(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.ano.label(class="form-label") }}
+
+                    {{ form.ano(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.cor.label(class="form-label") }}
+
+                    {{ form.cor(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.unidade.label(class="form-label") }}
+
+                    {{ form.unidade(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.km_atual.label(class="form-label") }}
+
+                    {{ form.km_atual(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.status.label(class="form-label") }}
+
+                    {{ form.status(class="form-select") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.ultima_revisao.label(class="form-label") }}
+
+                    {{ form.ultima_revisao(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.proxima_revisao.label(class="form-label") }}
+
+                    {{ form.proxima_revisao(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                {{ form.observacoes.label(class="form-label") }}
+
+                {{ form.observacoes(class="form-control", rows="4") }}
+
+            </div>
+
+            <div class="d-grid d-md-flex justify-content-md-end">
+
+                {{ form.submit(class="btn btn-primary btn-responsive") }}
+
+            </div>
 
         </form>
 
@@ -28,25 +146,21 @@ Novo Veículo
 
 </div>
 
-
 {% if mostrar_modal %}
 
-<div class="modal fade"
-     id="modalReativar"
-     tabindex="-1"
-     aria-hidden="true">
+<!-- Modal de Reativação -->
+
+<div class="modal fade" id="modalReativar" tabindex="-1">
 
     <div class="modal-dialog">
 
         <div class="modal-content">
 
-            <div class="modal-header bg-warning">
+            <div class="modal-header">
 
-                <h5 class="modal-title">
+                <h5 class="modal-title">Veículo Inativo Encontrado</h5>
 
-                    Veículo encontrado
-
-                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
             </div>
 
@@ -54,52 +168,23 @@ Novo Veículo
 
                 <p>
 
-                    Já existe um veículo inativo com a placa
-
-                    <strong>{{ veiculo_inativo.placa }}</strong>
+                    Já existe um veículo com a placa <strong>{{ veiculo_inativo.placa }}</strong> inativo no sistema.
 
                 </p>
 
-                <p>
-
-                    Deseja reativá-lo?
-
-                </p>
+                <p>Deseja reativá-lo?</p>
 
             </div>
 
             <div class="modal-footer">
 
-                <button
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
-                    Cancelar
-
-                </button>
-
-                <form
-                    method="POST"
-                    action="{{ url_for('veiculos.reativar', id=veiculo_inativo.id) }}">
+                <form method="POST" action="{{ url_for('veiculos.reativar', id=veiculo_inativo.id) }}" class="d-inline">
 
                     {{ form.hidden_tag() }}
 
-                    {% for campo in form if campo.name not in ['csrf_token','submit'] %}
-
-                        <input
-                            type="hidden"
-                            name="{{ campo.name }}"
-                            value="{{ campo.data if campo.data is not none else '' }}">
-
-                    {% endfor %}
-
-                    <button
-                        type="submit"
-                        class="btn btn-success">
-
-                        Reativar Veículo
-
-                    </button>
+                    <button type="submit" class="btn btn-success">Reativar Veículo</button>
 
                 </form>
 
@@ -113,15 +198,13 @@ Novo Veículo
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function(){
+    document.addEventListener("DOMContentLoaded", function() {
 
-    const modal = new bootstrap.Modal(
-        document.getElementById("modalReativar")
-    );
+        var modal = new bootstrap.Modal(document.getElementById("modalReativar"));
 
-    modal.show();
+        modal.show();
 
-});
+    });
 
 </script>
 

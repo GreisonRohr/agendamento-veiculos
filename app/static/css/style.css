@@ -80,7 +80,8 @@ a{
 
 }
 
-.sidebar a:hover{
+.sidebar a:hover,
+.sidebar a.active{
 
     background:#374151;
 
@@ -88,6 +89,14 @@ a{
 
     padding-left:30px;
 
+    border-left: 3px solid #3b82f6;
+
+}
+
+.sidebar a.active{
+    background:#2563eb;
+    color:#fff;
+    border-left: 3px solid #60a5fa;
 }
 
 .sidebar i{
@@ -416,4 +425,12 @@ a{
         font-size: 1rem;
     }
 
+}
+
+/* Cards de agenda */
+.agenda-card {
+    transition: transform 0.2s;
+}
+.agenda-card:hover {
+    transform: translateY(-2px);
 }

@@ -10,7 +10,9 @@ Editar Veículo
 
     <div class="card-header">
 
-        <h4 class="mb-0">
+        <h4>
+
+            <i class="bi bi-pencil-square"></i>
 
             Editar Veículo
 
@@ -24,7 +26,119 @@ Editar Veículo
 
             {{ form.hidden_tag() }}
 
-            {% include "veiculos/formulario.html" %}
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.placa.label(class="form-label") }}
+
+                    {{ form.placa(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.marca.label(class="form-label") }}
+
+                    {{ form.marca(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.modelo.label(class="form-label") }}
+
+                    {{ form.modelo(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.ano.label(class="form-label") }}
+
+                    {{ form.ano(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.cor.label(class="form-label") }}
+
+                    {{ form.cor(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.unidade.label(class="form-label") }}
+
+                    {{ form.unidade(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.km_atual.label(class="form-label") }}
+
+                    {{ form.km_atual(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.status.label(class="form-label") }}
+
+                    {{ form.status(class="form-select") }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.ultima_revisao.label(class="form-label") }}
+
+                    {{ form.ultima_revisao(class="form-control") }}
+
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+
+                    {{ form.proxima_revisao.label(class="form-label") }}
+
+                    {{ form.proxima_revisao(class="form-control") }}
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                {{ form.observacoes.label(class="form-label") }}
+
+                {{ form.observacoes(class="form-control", rows="4") }}
+
+            </div>
+
+            <div class="d-grid d-md-flex justify-content-md-end">
+
+                {{ form.submit(class="btn btn-primary btn-responsive") }}
+
+            </div>
 
         </form>
 

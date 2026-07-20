@@ -12,7 +12,7 @@ Veículos
 
         <h2 class="mb-1">
 
-            <i class="bi bi-car-front-fill"></i>
+            <i class="bi bi-car-front"></i>
 
             Veículos
 
@@ -20,14 +20,15 @@ Veículos
 
         <small class="text-muted">
 
-            Gerencie os veículos da empresa
+            Gerencie a frota de veículos
 
         </small>
 
     </div>
 
-    <a href="{{ url_for('veiculos.novo') }}"
-       class="btn btn-primary btn-responsive">
+    <a
+        href="{{ url_for('veiculos.novo') }}"
+        class="btn btn-primary btn-responsive">
 
         <i class="bi bi-plus-circle"></i>
 
@@ -51,23 +52,17 @@ Veículos
 
                         <th>Placa</th>
 
-                        <th>Marca</th>
+                        <th class="d-none d-md-table-cell">Marca/Modelo</th>
 
-                        <th>Modelo</th>
+                        <th class="d-none d-lg-table-cell">Ano</th>
 
-                        <th class="d-none d-lg-table-cell">
-                            Unidade
-                        </th>
+                        <th class="d-none d-lg-table-cell">Unidade</th>
 
-                        <th class="d-none d-md-table-cell">
-                            KM
-                        </th>
+                        <th class="d-none d-md-table-cell">KM</th>
 
                         <th>Status</th>
 
-                        <th class="text-center">
-                            Ações
-                        </th>
+                        <th class="text-center">Ações</th>
 
                     </tr>
 
@@ -75,49 +70,45 @@ Veículos
 
                 <tbody>
 
-                {% for veiculo in veiculos %}
+                {% for v in veiculos %}
 
                     <tr>
 
                         <td>
 
-                            <strong>
-
-                                {{ veiculo.placa }}
-
-                            </strong>
-
-                        </td>
-
-                        <td>
-
-                            {{ veiculo.marca }}
-
-                        </td>
-
-                        <td>
-
-                            {{ veiculo.modelo }}
-
-                        </td>
-
-                        <td class="d-none d-lg-table-cell">
-
-                            {{ veiculo.unidade }}
+                            <strong>{{ v.placa }}</strong>
 
                         </td>
 
                         <td class="d-none d-md-table-cell">
 
-                            {{ "{:,.0f}".format(veiculo.km_atual or 0).replace(",", ".") }}
+                            {{ v.marca }} {{ v.modelo }}
+
+                        </td>
+
+                        <td class="d-none d-lg-table-cell">
+
+                            {{ v.ano or '-' }}
+
+                        </td>
+
+                        <td class="d-none d-lg-table-cell">
+
+                            {{ v.unidade or '-' }}
+
+                        </td>
+
+                        <td class="d-none d-md-table-cell">
+
+                            {{ v.km_atual or 0 }}
 
                         </td>
 
                         <td>
 
-                            <span class="badge bg-{{ veiculo.badge_status }}">
+                            <span class="badge bg-{{ v.badge_status }}">
 
-                                {{ veiculo.status }}
+                                {{ v.status }}
 
                             </span>
 
@@ -125,18 +116,22 @@ Veículos
 
                         <td class="text-center table-acoes">
 
-                            <a href="{{ url_for('veiculos.editar', id=veiculo.id) }}"
-                               class="btn btn-warning btn-sm">
+                            <a
+                                href="{{ url_for('veiculos.editar', id=v.id) }}"
+                                class="btn btn-warning btn-sm"
+                                title="Editar">
 
-                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-pencil-fill"></i>
 
                             </a>
 
-                            <a href="{{ url_for('veiculos.excluir', id=veiculo.id) }}"
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Deseja realmente excluir este veículo?')">
+                            <a
+                                href="{{ url_for('veiculos.excluir', id=v.id) }}"
+                                class="btn btn-danger btn-sm"
+                                title="Excluir"
+                                onclick="return confirm('Deseja remover este veículo?')">
 
-                                <i class="bi bi-trash"></i>
+                                <i class="bi bi-trash-fill"></i>
 
                             </a>
 
@@ -150,7 +145,7 @@ Veículos
 
                         <td colspan="7" class="text-center py-5">
 
-                            <i class="bi bi-car-front-fill display-4 text-secondary"></i>
+                            <i class="bi bi-car-front display-4 text-secondary"></i>
 
                             <p class="mt-3 mb-0">
 

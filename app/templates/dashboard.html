@@ -21,9 +21,10 @@ Dashboard
 
 </div>
 
+<!-- Indicadores -->
 <div class="row g-4 mb-4">
 
-    <div class="col-md-3">
+    <div class="col-6 col-lg-3">
 
         <div class="card border-0 shadow-sm">
 
@@ -41,7 +42,7 @@ Dashboard
 
     </div>
 
-    <div class="col-md-3">
+    <div class="col-6 col-lg-3">
 
         <div class="card border-0 shadow-sm">
 
@@ -59,7 +60,7 @@ Dashboard
 
     </div>
 
-    <div class="col-md-3">
+    <div class="col-6 col-lg-3">
 
         <div class="card border-0 shadow-sm">
 
@@ -77,7 +78,7 @@ Dashboard
 
     </div>
 
-    <div class="col-md-3">
+    <div class="col-6 col-lg-3">
 
         <div class="card border-0 shadow-sm">
 
@@ -97,74 +98,100 @@ Dashboard
 
 </div>
 
-<div class="row">
+<div class="row g-4">
 
+    <!-- Próximos Agendamentos -->
     <div class="col-lg-8">
 
         <div class="card shadow-sm">
 
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
 
                 <strong>
                     <i class="bi bi-calendar-week"></i>
                     Próximos Agendamentos
                 </strong>
 
+                <a href="{{ url_for('agendamentos.novo') }}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-plus-lg"></i> Novo
+                </a>
+
             </div>
 
             <div class="card-body">
 
-                <table class="table table-hover align-middle">
+                <div class="table-responsive">
 
-                    <thead>
+                    <table class="table table-hover align-middle">
 
-                        <tr>
+                        <thead>
 
-                            <th>Data</th>
-                            <th>Hora</th>
-                            <th>Veículo</th>
-                            <th>Motorista</th>
-                            <th>Destino</th>
+                            <tr>
 
-                        </tr>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Veículo</th>
+                                <th>Motorista</th>
+                                <th>Destino</th>
+                                <th>Status</th>
 
-                    </thead>
+                            </tr>
 
-                    <tbody>
+                        </thead>
 
-                    {% for agendamento in agendamentos %}
+                        <tbody>
 
-                        <tr>
+                        {% for agendamento in agendamentos %}
 
-                            <td>{{ agendamento.data_saida.strftime("%d/%m/%Y") }}</td>
+                            <tr>
 
-                            <td>{{ agendamento.hora_saida.strftime("%H:%M") }}</td>
+                                <td>{{ agendamento.data_saida.strftime("%d/%m/%Y") }}</td>
 
-                            <td>{{ agendamento.veiculo.placa }}</td>
+                                <td>{{ agendamento.hora_saida.strftime("%H:%M") }}</td>
 
-                            <td>{{ agendamento.motorista }}</td>
+                                <td>
+                                    <strong>{{ agendamento.veiculo.placa }}</strong>
+                                    <br><small class="text-muted">{{ agendamento.veiculo.modelo }}</small>
+                                </td>
 
-                            <td>{{ agendamento.destino }}</td>
+                                <td>{{ agendamento.motorista }}</td>
 
-                        </tr>
+                                <td>{{ agendamento.destino }}</td>
 
-                    {% else %}
+                                <td>
+                                    {% if agendamento.status == "Agendado" %}
+                                        <span class="badge bg-success">Agendado</span>
+                                    {% elif agendamento.status == "Em andamento" %}
+                                        <span class="badge bg-primary">Em andamento</span>
+                                    {% elif agendamento.status == "Finalizado" %}
+                                        <span class="badge bg-secondary">Finalizado</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">{{ agendamento.status }}</span>
+                                    {% endif %}
+                                </td>
 
-                        <tr>
+                            </tr>
 
-                            <td colspan="5" class="text-center text-muted">
+                        {% else %}
 
-                                Nenhum agendamento encontrado.
+                            <tr>
 
-                            </td>
+                                <td colspan="6" class="text-center text-muted py-4">
 
-                        </tr>
+                                    <i class="bi bi-calendar-x display-6"></i>
+                                    <p class="mt-2 mb-0">Nenhum agendamento encontrado.</p>
 
-                    {% endfor %}
+                                </td>
 
-                    </tbody>
+                            </tr>
 
-                </table>
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 
@@ -172,42 +199,96 @@ Dashboard
 
     </div>
 
+    <!-- Coluna da direita -->
     <div class="col-lg-4">
 
+        <!-- Manutenções em Andamento -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <strong>
+                    <i class="bi bi-tools"></i>
+                    Manutenções Ativas
+                </strong>
+
+                <a href="{{ url_for('manutencoes.novo') }}" class="btn btn-sm btn-danger">
+                    <i class="bi bi-plus-lg"></i>
+                </a>
+
+            </div>
+
+            <div class="card-body">
+
+                {% for m in manutencoes_ativas %}
+
+                    <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
+
+                        <div>
+                            <strong>{{ m.veiculo.modelo }}</strong>
+                            <br><small class="text-muted">{{ m.veiculo.placa }}</small>
+                            <br><small class="text-muted">{{ m.tipo }}</small>
+                            {% if m.oficina %}
+                                <br><small><i class="bi bi-shop"></i> {{ m.oficina }}</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-end">
+                            <span class="badge bg-warning text-dark">Em andamento</span>
+                            <br><small class="text-muted">{{ m.data_inicio.strftime("%d/%m/%Y") }}</small>
+                            {% if m.custo %}
+                                <br><small class="text-danger fw-bold">R$ {{ "%.2f"|format(m.custo|float) }}</small>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <p class="text-muted text-center py-3">
+                        <i class="bi bi-check-circle display-6 text-success"></i>
+                        <br>Nenhuma manutenção ativa.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- Retornos de Hoje -->
         <div class="card shadow-sm">
 
             <div class="card-header">
 
                 <strong>
-
-                    <i class="bi bi-tools"></i>
-
-                    Em Manutenção
-
+                    <i class="bi bi-arrow-return-left"></i>
+                    Retornos de Hoje
                 </strong>
 
             </div>
 
             <div class="card-body">
 
-                {% for veiculo in manutencoes %}
+                {% for retorno in retornos %}
 
-                    <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
 
-                        <strong>{{ veiculo.modelo }}</strong>
+                        <div>
+                            <strong>{{ retorno.hora_retorno.strftime("%H:%M") }}</strong>
+                            <br><small>{{ retorno.veiculo.modelo }} - {{ retorno.veiculo.placa }}</small>
+                        </div>
 
-                        <br>
-
-                        <small>{{ veiculo.placa }}</small>
+                        <div class="text-end">
+                            <small>{{ retorno.motorista }}</small>
+                        </div>
 
                     </div>
 
                 {% else %}
 
-                    <p class="text-muted">
-
-                        Nenhum veículo em manutenção.
-
+                    <p class="text-muted text-center py-3">
+                        Nenhum retorno previsto para hoje.
                     </p>
 
                 {% endfor %}

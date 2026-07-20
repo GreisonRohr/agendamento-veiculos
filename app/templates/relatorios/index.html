@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}
+Relatórios
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            <i class="bi bi-file-earmark-bar-graph"></i>
+            Relatórios
+        </h2>
+
+        <small class="text-muted">
+            Análise e estatísticas da frota
+        </small>
+
+    </div>
+
+</div>
+
+<!-- Cards de Resumo -->
+<div class="row g-4 mb-4">
+
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-car-front-fill display-5 text-primary"></i>
+                <h6 class="mt-2">Veículos</h6>
+                <h3>{{ resumo.total_veiculos }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-calendar-check display-5 text-success"></i>
+                <h6 class="mt-2">Agendamentos</h6>
+                <h3>{{ resumo.total_agendamentos }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-tools display-5 text-danger"></i>
+                <h6 class="mt-2">Manutenções</h6>
+                <h3>{{ resumo.total_manutencoes }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-currency-dollar display-5 text-warning"></i>
+                <h6 class="mt-2">Custo Total</h6>
+                <h3>R$ {{ "%.2f"|format(resumo.custo_total_manutencoes|float) }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Status da Frota -->
+<div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-start border-4 border-success">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-muted mb-1">Disponíveis</h6>
+                    <h3 class="mb-0 text-success">{{ resumo.veiculos_disponiveis }}</h3>
+                </div>
+                <i class="bi bi-check-circle-fill display-4 text-success opacity-25"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-start border-4 border-warning">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-muted mb-1">Agendamentos Ativos</h6>
+                    <h3 class="mb-0 text-warning">{{ resumo.agendamentos_ativos }}</h3>
+                </div>
+                <i class="bi bi-calendar-event-fill display-4 text-warning opacity-25"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-start border-4 border-danger">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-muted mb-1">Em Manutenção</h6>
+                    <h3 class="mb-0 text-danger">{{ resumo.veiculos_manutencao }}</h3>
+                </div>
+                <i class="bi bi-tools display-4 text-danger opacity-25"></i>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Utilização por Veículo -->
+<div class="card shadow-sm">
+
+    <div class="card-header">
+        <strong>
+            <i class="bi bi-bar-chart"></i>
+            Utilização por Veículo
+        </strong>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Veículo</th>
+                        <th class="text-center">Agendamentos</th>
+                        <th class="text-center">Manutenções</th>
+                        <th class="text-end">Custo Manutenções</th>
+                        <th class="text-center">Utilização</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for item in utilizacao %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ item.veiculo.placa }}</strong>
+                            <br><small class="text-muted">{{ item.veiculo.modelo }}</small>
+                        </td>
+
+                        <td class="text-center">
+                            <span class="badge bg-primary">{{ item.total_agendamentos }}</span>
+                        </td>
+
+                        <td class="text-center">
+                            <span class="badge bg-warning text-dark">{{ item.total_manutencoes }}</span>
+                        </td>
+
+                        <td class="text-end">
+                            R$ {{ "%.2f"|format(item.custo_manutencoes|float) }}
+                        </td>
+
+                        <td class="text-center">
+                            {% set max_ag = utilizacao[0].total_agendamentos if utilizacao else 1 %}
+                            {% set pct = (item.total_agendamentos / max_ag * 100) if max_ag > 0 else 0 %}
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ pct }}%" aria-valuenow="{{ pct }}" aria-valuemin="0" aria-valuemax="100">
+                                    {{ "%.0f"|format(pct) }}%
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <i class="bi bi-bar-chart display-4 text-secondary"></i>
+                            <p class="mt-3 mb-0">Nenhum dado disponível.</p>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

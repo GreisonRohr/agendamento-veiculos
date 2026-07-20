@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}
+Manutenções
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+
+    <div>
+
+        <h2 class="mb-1">
+
+            <i class="bi bi-tools"></i>
+
+            Manutenções
+
+        </h2>
+
+        <small class="text-muted">
+
+            Gerencie as manutenções da frota
+
+        </small>
+
+    </div>
+
+    <a
+        href="{{ url_for('manutencoes.novo') }}"
+        class="btn btn-primary btn-responsive">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Nova Manutenção
+
+    </a>
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Veículo</th>
+
+                        <th class="d-none d-md-table-cell">Tipo</th>
+
+                        <th class="d-none d-lg-table-cell">Oficina</th>
+
+                        <th>Início</th>
+
+                        <th class="d-none d-md-table-cell">Término</th>
+
+                        <th>Custo</th>
+
+                        <th>Status</th>
+
+                        <th class="text-center">Ações</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for m in manutencoes %}
+
+                    <tr>
+
+                        <td>
+
+                            <strong>
+
+                                {{ m.veiculo.placa }}
+
+                            </strong>
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{ m.veiculo.modelo }}
+
+                            </small>
+
+                        </td>
+
+                        <td class="d-none d-md-table-cell">
+
+                            {{ m.tipo }}
+
+                        </td>
+
+                        <td class="d-none d-lg-table-cell">
+
+                            {{ m.oficina or "-" }}
+
+                        </td>
+
+                        <td>
+
+                            {{ m.data_inicio.strftime("%d/%m/%Y") }}
+
+                        </td>
+
+                        <td class="d-none d-md-table-cell">
+
+                            {{ m.data_fim.strftime("%d/%m/%Y") if m.data_fim else "-" }}
+
+                        </td>
+
+                        <td>
+
+                            R$ {{ "%.2f"|format(m.custo|float) }}
+
+                        </td>
+
+                        <td>
+
+                            {% if m.status == "Em andamento" %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Em andamento
+
+                                </span>
+
+                            {% elif m.status == "Concluída" %}
+
+                                <span class="badge bg-success">
+
+                                    Concluída
+
+                                </span>
+
+                            {% elif m.status == "Cancelada" %}
+
+                                <span class="badge bg-danger">
+
+                                    Cancelada
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+
+                                    {{ m.status }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="text-center table-acoes">
+
+                            <a
+                                href="{{ url_for('manutencoes.editar', id=m.id) }}"
+                                class="btn btn-warning btn-sm"
+                                title="Editar">
+
+                                <i class="bi bi-pencil-fill"></i>
+
+                            </a>
+
+                            <a
+                                href="{{ url_for('manutencoes.excluir', id=m.id) }}"
+                                class="btn btn-danger btn-sm"
+                                title="Excluir"
+                                onclick="return confirm('Deseja remover esta manutenção?')">
+
+                                <i class="bi bi-trash-fill"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="8" class="text-center py-5">
+
+                            <i class="bi bi-wrench display-4 text-secondary"></i>
+
+                            <p class="mt-3 mb-0">
+
+                                Nenhuma manutenção registrada.
+
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

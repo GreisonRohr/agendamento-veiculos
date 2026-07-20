@@ -16,8 +16,20 @@ Agenda da Frota
         </h2>
 
         <small class="text-muted">
-            Visão operacional dos veículos
+            Visão operacional dos veículos em tempo real
         </small>
+
+    </div>
+
+    <div class="d-flex gap-2">
+
+        <a href="{{ url_for('agendamentos.novo') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Novo Agendamento
+        </a>
+
+        <a href="{{ url_for('manutencoes.novo') }}" class="btn btn-danger">
+            <i class="bi bi-tools"></i> Nova Manutenção
+        </a>
 
     </div>
 
@@ -26,16 +38,15 @@ Agenda da Frota
 <div class="row g-4">
 
     <!-- Próximas Saídas -->
-
     <div class="col-lg-6">
 
-        <div class="card shadow-sm border-0 h-100">
+        <div class="card shadow-sm border-0 h-100 agenda-card">
 
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-                <i class="bi bi-box-arrow-right"></i>
+                <span><i class="bi bi-box-arrow-right"></i> Próximas Saídas</span>
 
-                Próximas Saídas
+                <span class="badge bg-white text-primary">{{ proximas_saidas|length }}</span>
 
             </div>
 
@@ -43,45 +54,47 @@ Agenda da Frota
 
                 {% for agendamento in proximas_saidas %}
 
-                <div class="border-bottom pb-3 mb-3">
+                <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
 
-                    <h5>
+                    <div>
 
-                        {{ agendamento.hora_saida.strftime("%H:%M") }}
+                        <h5 class="mb-1 text-primary">{{ agendamento.hora_saida.strftime("%H:%M") }}</h5>
 
-                    </h5>
+                        <strong>🚗 {{ agendamento.veiculo.modelo }}</strong>
 
-                    <strong>
+                        <br><small class="text-muted">{{ agendamento.veiculo.placa }}</small>
 
-                        🚗 {{ agendamento.veiculo.modelo }}
+                        <br><span class="text-dark">👤 {{ agendamento.motorista }}</span>
 
-                    </strong>
+                        <br><span class="text-muted">📍 {{ agendamento.destino }}</span>
 
-                    <br>
+                    </div>
 
-                    <small>
+                    <div class="text-end">
 
-                        {{ agendamento.veiculo.placa }}
+                        <span class="badge bg-success">{{ agendamento.data_saida.strftime("%d/%m") }}</span>
 
-                    </small>
+                        <br><small class="text-muted">{{ agendamento.data_saida.strftime("%A")[:3] }}</small>
 
-                    <br>
+                        <br>
 
-                    👤 {{ agendamento.motorista }}
+                        <a href="{{ url_for('agendamentos.editar', id=agendamento.id) }}" class="btn btn-sm btn-outline-primary mt-2">
+                            <i class="bi bi-pencil"></i>
+                        </a>
 
-                    <br>
-
-                    📍 {{ agendamento.destino }}
+                    </div>
 
                 </div>
 
                 {% else %}
 
-                <p class="text-muted">
+                <div class="text-center py-4">
 
-                    Nenhuma saída programada.
+                    <i class="bi bi-calendar-check display-4 text-success"></i>
 
-                </p>
+                    <p class="text-muted mt-2">Nenhuma saída programada.</p>
+
+                </div>
 
                 {% endfor %}
 
@@ -92,16 +105,15 @@ Agenda da Frota
     </div>
 
     <!-- Veículos Livres -->
-
     <div class="col-lg-6">
 
-        <div class="card shadow-sm border-0 h-100">
+        <div class="card shadow-sm border-0 h-100 agenda-card">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
 
-                <i class="bi bi-car-front-fill"></i>
+                <span><i class="bi bi-car-front-fill"></i> Veículos Livres</span>
 
-                Veículos Livres
+                <span class="badge bg-white text-success">{{ livres|length }}</span>
 
             </div>
 
@@ -109,41 +121,45 @@ Agenda da Frota
 
                 {% for veiculo in livres %}
 
-                <div class="d-flex justify-content-between border-bottom py-2">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
 
                     <div>
 
-                        <strong>
+                        <strong>{{ veiculo.modelo }}</strong>
 
-                            {{ veiculo.modelo }}
+                        <br><small class="text-muted">{{ veiculo.placa }}</small>
 
-                        </strong>
-
-                        <br>
-
-                        <small>
-
-                            {{ veiculo.placa }}
-
-                        </small>
+                        {% if veiculo.unidade %}
+                            <br><small class="text-muted">📍 {{ veiculo.unidade }}</small>
+                        {% endif %}
 
                     </div>
 
-                    <span class="badge bg-success">
+                    <div class="text-end">
 
-                        Disponível
+                        <span class="badge bg-success">Disponível</span>
 
-                    </span>
+                        <br><small class="text-muted">{{ veiculo.km_atual or 0 }} km</small>
+
+                        <br>
+
+                        <a href="{{ url_for('agendamentos.novo') }}" class="btn btn-sm btn-outline-success mt-2">
+                            <i class="bi bi-plus-lg"></i> Agendar
+                        </a>
+
+                    </div>
 
                 </div>
 
                 {% else %}
 
-                <p class="text-muted">
+                <div class="text-center py-4">
 
-                    Nenhum veículo disponível.
+                    <i class="bi bi-car-front display-4 text-secondary"></i>
 
-                </p>
+                    <p class="text-muted mt-2">Nenhum veículo disponível.</p>
+
+                </div>
 
                 {% endfor %}
 
@@ -158,16 +174,15 @@ Agenda da Frota
 <div class="row g-4 mt-2">
 
     <!-- Retornos -->
-
     <div class="col-lg-6">
 
-        <div class="card shadow-sm border-0">
+        <div class="card shadow-sm border-0 agenda-card">
 
-            <div class="card-header bg-warning">
+            <div class="card-header bg-warning d-flex justify-content-between align-items-center">
 
-                <i class="bi bi-arrow-return-left"></i>
+                <span><i class="bi bi-arrow-return-left"></i> Retornos de Hoje</span>
 
-                Retornos de Hoje
+                <span class="badge bg-dark">{{ retornos|length }}</span>
 
             </div>
 
@@ -175,35 +190,37 @@ Agenda da Frota
 
                 {% for retorno in retornos %}
 
-                <div class="border-bottom py-2">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
 
-                    <strong>
+                    <div>
 
-                        {{ retorno.hora_retorno.strftime("%H:%M") }}
+                        <strong class="text-warning">{{ retorno.hora_retorno.strftime("%H:%M") }}</strong>
 
-                    </strong>
+                        <span class="ms-2">{{ retorno.veiculo.modelo }}</span>
 
-                    -
+                        <br><small class="text-muted">{{ retorno.veiculo.placa }} • {{ retorno.motorista }}</small>
 
-                    {{ retorno.veiculo.modelo }}
+                    </div>
 
-                    <br>
+                    <div>
 
-                    <small>
+                        <a href="{{ url_for('agendamentos.editar', id=retorno.id) }}" class="btn btn-sm btn-outline-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
 
-                        {{ retorno.motorista }}
-
-                    </small>
+                    </div>
 
                 </div>
 
                 {% else %}
 
-                <p class="text-muted">
+                <div class="text-center py-4">
 
-                    Nenhum retorno previsto.
+                    <i class="bi bi-house-door display-4 text-secondary"></i>
 
-                </p>
+                    <p class="text-muted mt-2">Nenhum retorno previsto.</p>
+
+                </div>
 
                 {% endfor %}
 
@@ -214,16 +231,15 @@ Agenda da Frota
     </div>
 
     <!-- Manutenção -->
-
     <div class="col-lg-6">
 
-        <div class="card shadow-sm border-0">
+        <div class="card shadow-sm border-0 agenda-card">
 
-            <div class="card-header bg-danger text-white">
+            <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
 
-                <i class="bi bi-tools"></i>
+                <span><i class="bi bi-tools"></i> Em Manutenção</span>
 
-                Em Manutenção
+                <span class="badge bg-white text-danger">{{ manutencoes|length }}</span>
 
             </div>
 
@@ -231,31 +247,39 @@ Agenda da Frota
 
                 {% for veiculo in manutencoes %}
 
-                <div class="border-bottom py-2">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
 
-                    <strong>
+                    <div>
 
-                        {{ veiculo.modelo }}
+                        <strong>{{ veiculo.modelo }}</strong>
 
-                    </strong>
+                        <br><small class="text-muted">{{ veiculo.placa }}</small>
 
-                    <br>
+                    </div>
 
-                    <small>
+                    <div class="text-end">
 
-                        {{ veiculo.placa }}
+                        <span class="badge bg-danger">Manutenção</span>
 
-                    </small>
+                        <br>
+
+                        <a href="{{ url_for('manutencoes.index') }}" class="btn btn-sm btn-outline-light mt-2 text-danger border-danger">
+                            <i class="bi bi-eye"></i> Ver
+                        </a>
+
+                    </div>
 
                 </div>
 
                 {% else %}
 
-                <p class="text-muted">
+                <div class="text-center py-4">
 
-                    Nenhum veículo em manutenção.
+                    <i class="bi bi-wrench display-4 text-success"></i>
 
-                </p>
+                    <p class="text-muted mt-2">Nenhum veículo em manutenção.</p>
+
+                </div>
 
                 {% endfor %}
 

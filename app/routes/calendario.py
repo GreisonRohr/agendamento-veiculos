@@ -5,6 +5,7 @@ from flask import (
 )
 
 from app.services.calendario_service import CalendarioService
+from app.services.auth_service import login_required
 
 
 calendario_bp = Blueprint(
@@ -15,6 +16,7 @@ calendario_bp = Blueprint(
 
 
 @calendario_bp.route("/")
+@login_required
 def index():
 
     return render_template(
@@ -23,6 +25,7 @@ def index():
 
 
 @calendario_bp.route("/eventos")
+@login_required
 def eventos():
 
     return jsonify(

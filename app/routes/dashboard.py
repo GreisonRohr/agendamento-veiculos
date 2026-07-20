@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 
 from app.services.dashboard_service import DashboardService
+from app.services.auth_service import login_required
 
 dashboard_bp = Blueprint(
     "dashboard",
@@ -9,6 +10,7 @@ dashboard_bp = Blueprint(
 
 
 @dashboard_bp.route("/")
+@login_required
 def index():
 
     return render_template(
@@ -21,6 +23,8 @@ def index():
         retornos=DashboardService.retornos_hoje(),
 
         manutencoes=DashboardService.manutencoes(),
+
+        manutencoes_ativas=DashboardService.manutencoes_ativas(),
 
         revisoes=DashboardService.proximas_revisoes()
     )

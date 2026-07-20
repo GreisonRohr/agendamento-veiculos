@@ -22,6 +22,10 @@ def create_app():
     from app.routes.auth import auth_bp
     from app.routes.agenda import agenda_bp
     from app.routes.calendario import calendario_bp
+    from app.routes.relatorios import relatorios_bp
+    from app.routes.configuracoes import configuracoes_bp
+    from app.routes.usuarios import usuarios_bp
+    from app.routes.historico import historico_bp
 
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(veiculos_bp)
@@ -30,5 +34,9 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(agenda_bp)
     app.register_blueprint(calendario_bp)
-    
+    app.register_blueprint(relatorios_bp)
+    app.register_blueprint(configuracoes_bp)
+    app.register_blueprint(usuarios_bp)
+    app.register_blueprint(historico_bp)
+
     return app

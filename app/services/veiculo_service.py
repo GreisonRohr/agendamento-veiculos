@@ -14,6 +14,19 @@ class VeiculoService:
         )
 
     @staticmethod
+    def listar_disponiveis_para_agendamento():
+        """Retorna apenas veículos que podem ser agendados."""
+        return (
+            Veiculo.query
+            .filter_by(
+                ativo=True,
+                status="Disponível"
+            )
+            .order_by(Veiculo.placa)
+            .all()
+        )
+
+    @staticmethod
     def buscar_por_id(id):
         return Veiculo.query.get_or_404(id)
 

@@ -26,15 +26,17 @@ Agendamentos
 
     </div>
 
-    <a
-        href="{{ url_for('agendamentos.novo') }}"
-        class="btn btn-primary btn-responsive">
+    <div class="d-flex gap-2">
 
-        <i class="bi bi-plus-circle"></i>
+        <a href="{{ url_for('agendamentos.exportar') }}" class="btn btn-success btn-responsive">
+            <i class="bi bi-file-earmark-excel"></i> Exportar CSV
+        </a>
 
-        Novo Agendamento
+        <a href="{{ url_for('agendamentos.novo') }}" class="btn btn-primary btn-responsive">
+            <i class="bi bi-plus-circle"></i> Novo Agendamento
+        </a>
 
-    </a>
+    </div>
 
 </div>
 

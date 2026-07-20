@@ -6,13 +6,18 @@ Calendário
 
 {% block content %}
 
-<h2 class="mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <i class="bi bi-calendar3"></i>
+    <h2>
+        <i class="bi bi-calendar3"></i>
+        Calendário da Frota
+    </h2>
 
-    Calendário da Frota
+    <a href="{{ url_for('agendamentos.novo') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Novo Agendamento
+    </a>
 
-</h2>
+</div>
 
 <div class="card shadow">
 
@@ -35,6 +40,7 @@ Calendário
 
                 <h5 class="modal-title">
 
+                    <i class="bi bi-calendar-event"></i>
                     Detalhes do Agendamento
 
                 </h5>
@@ -49,73 +55,68 @@ Calendário
 
             <div class="modal-body">
 
-                <div class="row">
+                <div class="row g-3">
 
                     <div class="col-md-6">
 
-                        <strong>Veículo</strong>
-
-                        <p id="modalVeiculo"></p>
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Veículo</small>
+                            <p class="mb-0 fw-bold" id="modalVeiculo"></p>
+                        </div>
 
                     </div>
 
                     <div class="col-md-6">
 
-                        <strong>Placa</strong>
-
-                        <p id="modalPlaca"></p>
-
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-6">
-
-                        <strong>Motorista</strong>
-
-                        <p id="modalMotorista"></p>
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Placa</small>
+                            <p class="mb-0 fw-bold" id="modalPlaca"></p>
+                        </div>
 
                     </div>
 
                     <div class="col-md-6">
 
-                        <strong>Destino</strong>
-
-                        <p id="modalDestino"></p>
-
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-6">
-
-                        <strong>Início</strong>
-
-                        <p id="modalInicio"></p>
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Motorista</small>
+                            <p class="mb-0 fw-bold" id="modalMotorista"></p>
+                        </div>
 
                     </div>
 
                     <div class="col-md-6">
 
-                        <strong>Fim</strong>
-
-                        <p id="modalFim"></p>
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Destino</small>
+                            <p class="mb-0 fw-bold" id="modalDestino"></p>
+                        </div>
 
                     </div>
 
-                </div>
+                    <div class="col-md-6">
 
-                <div class="row">
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Início</small>
+                            <p class="mb-0 fw-bold" id="modalInicio"></p>
+                        </div>
+
+                    </div>
 
                     <div class="col-md-6">
 
-                        <strong>Status</strong>
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Fim</small>
+                            <p class="mb-0 fw-bold" id="modalFim"></p>
+                        </div>
 
-                        <p id="modalStatus"></p>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="p-2 bg-light rounded">
+                            <small class="text-muted">Status</small>
+                            <p class="mb-0" id="modalStatus"></p>
+                        </div>
 
                     </div>
 
@@ -123,9 +124,10 @@ Calendário
 
                 <hr>
 
-                <strong>Observações</strong>
-
-                <p id="modalObservacoes"></p>
+                <div class="p-2 bg-light rounded">
+                    <small class="text-muted">Observações</small>
+                    <p class="mb-0" id="modalObservacoes"></p>
+                </div>
 
             </div>
 
@@ -135,7 +137,7 @@ Calendário
                     class="btn btn-secondary"
                     data-bs-dismiss="modal">
 
-                    Fechar
+                    <i class="bi bi-x-lg"></i> Fechar
 
                 </button>
 
@@ -143,7 +145,7 @@ Calendário
                     id="btnEditar"
                     class="btn btn-primary">
 
-                    Editar
+                    <i class="bi bi-pencil"></i> Editar
 
                 </a>
 

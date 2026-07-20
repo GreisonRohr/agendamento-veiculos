@@ -1,7 +1,12 @@
 from datetime import datetime
+import csv
+import io
+
+from flask import Response
 
 from app.extensions import db
-from app.models import Agendamento
+from app.models import Agendamento, Veiculo
+from app.services.auth_service import AuthService
 
 
 class AgendamentoService:
@@ -47,21 +52,75 @@ class AgendamentoService:
 
         return True
 
+    @staticmethod
+    def veiculo_pode_ser_agendado(veiculo_id):
+        """Verifica se o veículo está em condições de ser agendado."""
+        veiculo = Veiculo.query.get(veiculo_id)
+        if not veiculo:
+            return False, "Veículo não encontrado."
+
+        if not veiculo.ativo:
+            return False, "Veículo está inativo."
+
+        if veiculo.status == "Manutenção":
+            return False, "Veículo está em manutenção."
+
+        if veiculo.status == "Inativo":
+            return False, "Veículo está inativo."
+
+        return True, ""
 
     @staticmethod
     def listar():
-
-        return (
-            Agendamento.query
-            .order_by(
-                Agendamento.data_saida.desc(),
-                Agendamento.hora_saida.desc()
+        """Lista agendamentos. Admin vê todos, usuário comum vê só os seus."""
+        if AuthService.eh_admin():
+            return (
+                Agendamento.query
+                .order_by(
+                    Agendamento.data_saida.desc(),
+                    Agendamento.hora_saida.desc()
+                )
+                .all()
             )
-            .all()
-        )
+        else:
+            usuario = AuthService.usuario_atual()
+            if usuario:
+                return (
+                    Agendamento.query
+                    .filter_by(usuario_id=usuario.id)
+                    .order_by(
+                        Agendamento.data_saida.desc(),
+                        Agendamento.hora_saida.desc()
+                    )
+                    .all()
+                )
+            return []
+
+    @staticmethod
+    def pode_editar(agendamento_id):
+        """Verifica se o usuário atual pode editar o agendamento."""
+        if AuthService.eh_admin():
+            return True
+
+        agendamento = Agendamento.query.get(agendamento_id)
+        if not agendamento:
+            return False
+
+        usuario = AuthService.usuario_atual()
+        if usuario and agendamento.usuario_id == usuario.id:
+            return True
+
+        return False
 
     @staticmethod
     def criar(form):
+
+        # Valida status do veículo
+        pode_agendar, mensagem = AgendamentoService.veiculo_pode_ser_agendado(
+            form.veiculo.data
+        )
+        if not pode_agendar:
+            return {"erro": mensagem}
 
         if not AgendamentoService.veiculo_disponivel(
             form.veiculo.data,
@@ -70,7 +129,7 @@ class AgendamentoService:
             form.data_retorno.data,
             form.hora_retorno.data
         ):
-            return None
+            return {"erro": "conflito"}
 
         agendamento = Agendamento(
             veiculo_id=form.veiculo.data,
@@ -83,6 +142,11 @@ class AgendamentoService:
             hora_retorno=form.hora_retorno.data,
             observacoes=form.observacoes.data
         )
+
+        # Associa ao usuário logado
+        usuario = AuthService.usuario_atual()
+        if usuario:
+            agendamento.usuario_id = usuario.id
 
         db.session.add(agendamento)
         db.session.commit()
@@ -99,6 +163,13 @@ class AgendamentoService:
 
         agendamento = Agendamento.query.get_or_404(id)
 
+        # Valida status do veículo
+        pode_agendar, mensagem = AgendamentoService.veiculo_pode_ser_agendado(
+            form.veiculo.data
+        )
+        if not pode_agendar:
+            return {"erro": mensagem}
+
         if not AgendamentoService.veiculo_disponivel(
             form.veiculo.data,
             form.data_saida.data,
@@ -107,7 +178,7 @@ class AgendamentoService:
             form.hora_retorno.data,
             ignorar_agendamento=id
         ):
-            return None
+            return {"erro": "conflito"}
 
         agendamento.veiculo_id = form.veiculo.data
         agendamento.motorista = form.motorista.data
@@ -122,7 +193,7 @@ class AgendamentoService:
         db.session.commit()
 
         return agendamento
-    
+
     @staticmethod
     def excluir(id):
 
@@ -131,3 +202,56 @@ class AgendamentoService:
         agendamento.status = "Cancelado"
 
         db.session.commit()
+
+    @staticmethod
+    def exportar_csv():
+        """Exporta agendamentos para CSV. Admin vê todos, usuário comum vê só os seus."""
+        agendamentos = AgendamentoService.listar()
+
+        output = io.StringIO()
+        writer = csv.writer(output)
+
+        # Cabeçalho
+        writer.writerow([
+            "ID",
+            "Veículo",
+            "Placa",
+            "Motorista",
+            "Destino",
+            "Motivo",
+            "Data Saída",
+            "Hora Saída",
+            "Data Retorno",
+            "Hora Retorno",
+            "Status",
+            "Observações",
+            "Criado Em"
+        ])
+
+        # Dados
+        for a in agendamentos:
+            writer.writerow([
+                a.id,
+                a.veiculo.modelo if a.veiculo else "",
+                a.veiculo.placa if a.veiculo else "",
+                a.motorista,
+                a.destino,
+                a.motivo or "",
+                a.data_saida.strftime("%d/%m/%Y") if a.data_saida else "",
+                a.hora_saida.strftime("%H:%M") if a.hora_saida else "",
+                a.data_retorno.strftime("%d/%m/%Y") if a.data_retorno else "",
+                a.hora_retorno.strftime("%H:%M") if a.hora_retorno else "",
+                a.status,
+                a.observacoes or "",
+                a.criado_em.strftime("%d/%m/%Y %H:%M") if a.criado_em else ""
+            ])
+
+        output.seek(0)
+
+        return Response(
+            output.getvalue(),
+            mimetype="text/csv",
+            headers={
+                "Content-Disposition": "attachment; filename=agendamentos.csv"
+            }
+        )

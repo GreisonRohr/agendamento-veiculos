@@ -9,6 +9,7 @@ from flask import (
 
 from app.forms import VeiculoForm
 from app.services.veiculo_service import VeiculoService
+from app.services.auth_service import login_required, admin_required
 
 veiculos_bp = Blueprint(
     "veiculos",
@@ -18,6 +19,7 @@ veiculos_bp = Blueprint(
 
 
 @veiculos_bp.route("/")
+@login_required
 def index():
 
     return render_template(
@@ -27,6 +29,7 @@ def index():
 
 
 @veiculos_bp.route("/novo", methods=["GET", "POST"])
+@admin_required
 def novo():
 
     form = VeiculoForm()
@@ -91,6 +94,7 @@ def novo():
 
 
 @veiculos_bp.route("/editar/<int:id>", methods=["GET", "POST"])
+@admin_required
 def editar(id):
 
     veiculo = VeiculoService.buscar_por_id(id)
@@ -132,6 +136,7 @@ def editar(id):
     )
 
 @veiculos_bp.route("/excluir/<int:id>")
+@admin_required
 def excluir(id):
 
     VeiculoService.excluir(id)
@@ -147,6 +152,7 @@ def excluir(id):
 
 
 @veiculos_bp.route("/reativar/<int:id>", methods=["POST"])
+@admin_required
 def reativar(id):
 
     form = VeiculoForm()

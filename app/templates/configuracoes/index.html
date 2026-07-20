@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}
+Configurações
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            <i class="bi bi-gear"></i>
+            Configurações
+        </h2>
+
+        <small class="text-muted">
+            Informações do sistema e estatísticas
+        </small>
+
+    </div>
+
+</div>
+
+<!-- Sobre o Sistema -->
+<div class="row g-4">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+                <strong><i class="bi bi-info-circle"></i> Sobre o Sistema</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="d-flex align-items-center mb-4">
+                    <i class="bi bi-car-front-fill display-3 text-primary me-3"></i>
+                    <div>
+                        <h4 class="mb-1">Garagem Lab</h4>
+                        <p class="text-muted mb-0">Sistema de Agendamento de Veículos</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row g-3">
+
+                    <div class="col-6">
+                        <small class="text-muted">Versão</small>
+                        <p class="fw-bold mb-0">1.0.0</p>
+                    </div>
+
+                    <div class="col-6">
+                        <small class="text-muted">Ambiente</small>
+                        <p class="fw-bold mb-0">Desenvolvimento</p>
+                    </div>
+
+                    <div class="col-6">
+                        <small class="text-muted">Framework</small>
+                        <p class="fw-bold mb-0">Flask + SQLAlchemy</p>
+                    </div>
+
+                    <div class="col-6">
+                        <small class="text-muted">Frontend</small>
+                        <p class="fw-bold mb-0">Bootstrap 5 + Jinja2</p>
+                    </div>
+
+                    <div class="col-6">
+                        <small class="text-muted">Banco de Dados</small>
+                        <p class="fw-bold mb-0">SQLite / PostgreSQL</p>
+                    </div>
+
+                    <div class="col-6">
+                        <small class="text-muted">Deploy</small>
+                        <p class="fw-bold mb-0">Render</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Estatísticas Rápidas -->
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+                <strong><i class="bi bi-graph-up"></i> Estatísticas do Sistema</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded text-center">
+                            <i class="bi bi-car-front text-primary fs-3"></i>
+                            <h4 class="mb-0 mt-2">{{ resumo.total_veiculos }}</h4>
+                            <small class="text-muted">Veículos Cadastrados</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded text-center">
+                            <i class="bi bi-calendar-check text-success fs-3"></i>
+                            <h4 class="mb-0 mt-2">{{ resumo.total_agendamentos }}</h4>
+                            <small class="text-muted">Agendamentos Totais</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded text-center">
+                            <i class="bi bi-tools text-danger fs-3"></i>
+                            <h4 class="mb-0 mt-2">{{ resumo.total_manutencoes }}</h4>
+                            <small class="text-muted">Manutenções Registradas</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded text-center">
+                            <i class="bi bi-currency-dollar text-warning fs-3"></i>
+                            <h4 class="mb-0 mt-2">R$ {{ "%.0f"|format(resumo.custo_total_manutencoes|float) }}</h4>
+                            <small class="text-muted">Custo Total (R$)</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Links Rápidos -->
+        <div class="card shadow-sm mt-4">
+
+            <div class="card-header">
+                <strong><i class="bi bi-link-45deg"></i> Links Rápidos</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="list-group list-group-flush">
+
+                    <a href="{{ url_for('veiculos.index') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-car-front me-2"></i> Gerenciar Veículos</span>
+                        <i class="bi bi-chevron-right text-muted"></i>
+                    </a>
+
+                    <a href="{{ url_for('agendamentos.index') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-calendar-check me-2"></i> Gerenciar Agendamentos</span>
+                        <i class="bi bi-chevron-right text-muted"></i>
+                    </a>
+
+                    <a href="{{ url_for('manutencoes.index') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-tools me-2"></i> Gerenciar Manutenções</span>
+                        <i class="bi bi-chevron-right text-muted"></i>
+                    </a>
+
+                    <a href="{{ url_for('relatorios.index') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-file-earmark-bar-graph me-2"></i> Ver Relatórios</span>
+                        <i class="bi bi-chevron-right text-muted"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
